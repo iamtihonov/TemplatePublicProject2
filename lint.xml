@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Постепенно какие нужно описывать как warning. All list errors: -->
+    <!-- https://googlesamples.github.io/android-custom-lint-rules/checks/severity.md.html -->
+    <issue id="GradleDependency" severity="warning" />
+    <issue id="AndroidGradlePluginVersion" severity="warning" />
+    <issue id="Deprecated" severity="warning"/>
+    <issue id="all" severity="error" />
+</lint>

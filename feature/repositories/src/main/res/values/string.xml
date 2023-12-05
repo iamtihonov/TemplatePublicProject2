@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_count_repositories">Репозитории не найдены</string>
+
+    <string name="repositories_title">Main</string>
+    <string name="repositories_filter_title">Фильтр</string>
+
+    <string-array name="repository_filter">
+        <item>Все</item>
+        <item>Java</item>
+        <item>Kotlin</item>
+    </string-array>
+</resources>

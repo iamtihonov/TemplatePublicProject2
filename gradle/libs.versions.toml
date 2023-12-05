@@ -1,0 +1,153 @@
+[versions]
+
+# Android Studio Giraffe 2022.3.1 = Android Gradle plugin (AGP) 3.2-8.1 (3.2 is old version number)
+# AGP 8.1 = minimum gradle 8.0 (last 8.4)
+# The gradle version can be found in the gradle-wrapper.properties file
+# more info https://developer.android.com/build/releases/gradle-plugin
+# and maybe need check https://detekt.dev/docs/introduction/compatibility/
+
+# main
+gradleVersion = "8.4" # not using, only info (gradle-wrapper.properties)
+androidGradlePlugin = "8.1.1" # todo use 8.1.4
+detektVersion = "1.23.3" # Указать ссылку на эту строку не получилось
+kotlin = "1.9.10"
+ksp = "1.9.10-1.0.13" # The version must be compatible with kotlin
+hilt = "2.48.1"
+kotlinxCoroutines = "1.7.3"
+jdk_version = "17" # not using, only info
+
+# tests
+junit = "4.13.2"
+junitAndroid = "1.1.5"
+espresso = "3.5.1"
+mockito = "4.8.0"
+navVersion = "2.7.5"
+orchestrator = "1.4.2"
+uiautomator = "2.2.0"
+runner = "1.5.2"
+benchmark-junit4 = "1.1.1"
+robolectric = "4.11.1"
+
+# data layer
+room = "2.6.0"
+datastore = "1.0.0"
+retrofit = "2.9.0"
+chucker = "3.4.0"
+logging-interceptor = "4.7.2"
+datetime = "0.4.1"
+timber = "5.0.1"
+
+# view layer
+androidxLifecycle = "2.6.2"
+lifecycle-extensions = "2.2.0"
+ktx = "1.9.0"
+appcompat = "1.6.1"
+constraintlayout = "2.1.4"
+material = "1.10.0"
+androidxHiltNavigationCompose = "1.1.0"
+coil = "2.4.0"
+androidxComposeCompiler = "1.5.3"
+androidxComposeBom = "2023.10.00"
+androidxComposeRuntimeTracing = "1.0.0-alpha03"
+
+# other
+rxandroid = "2.1.1"
+rxjava = "2.2.19"
+leakcanary = "2.9.1"
+gmsPlugin = "4.3.15"
+org-jetbrains-kotlin-jvm = "1.9.10"
+
+[libraries]
+androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+
+androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navVersion" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+coil-kt = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+coil-kt-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "androidxComposeCompiler"}
+androidx-compose-runtime-tracing = { group = "androidx.compose.runtime", name = "runtime-tracing", version.ref = "androidxComposeRuntimeTracing" }
+
+junit-java = { group = "junit", name = "junit", version.ref = "junit" }
+junit-android = { group = "androidx.test.ext", name = "junit", version.ref = "junitAndroid" }
+mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
+benchmark-junit4 = { group = "androidx.benchmark", name = "benchmark-junit4", version.ref = "benchmark.junit4" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric"}
+
+orchestrator = { group = "androidx.test", name = "orchestrator", version.ref = "orchestrator" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+espresso-intents = { group = "androidx.test.espresso", name = "espresso-intents", version.ref = "espresso" }
+espresso-idling = { group = "androidx.test.espresso", name = "espresso-idling-resource", version.ref = "espresso" }
+espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espresso" }
+
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
+datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+chucker-release = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chucker" }
+chucker-debug = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chucker" }
+logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "logging.interceptor" }
+
+retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+retrofit-rxjava2 = { group = "com.squareup.retrofit2", name = "adapter-rxjava2", version.ref = "retrofit" }
+
+rxandroid = { group = "io.reactivex.rxjava2", name = "rxandroid", version.ref = "rxandroid" }
+rxjava = { group = "io.reactivex.rxjava2", name = "rxjava", version.ref = "rxjava" }
+datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime"}
+
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-rxjava2 = { group = "androidx.room", name = "room-rxjava2", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+androidx-lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version.ref = "lifecycle-extensions" }
+androidx-lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-common-java8", version.ref = "androidxLifecycle" }
+androidx-lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
+androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
+
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
+
+# Dependencies of the included build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-android = {id = "org.jetbrains.kotlin.android", version.ref = "kotlin"}
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+gms = { id = "com.google.gms.google-services", version.ref = "gmsPlugin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "org-jetbrains-kotlin-jvm" }
+
+# kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" } # для java модулей
+# kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+# kotlin-jdk7 = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version.ref = "kotlin" }
+# kotlin-standart = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
+
+# Plugins defined by this project
+template-android-application = { id = "template.android.application", version = "unspecified" }
+template-android-application-compose = { id = "template.android.application.compose", version = "unspecified" }
+#template-android-application-firebase = { id = "template.android.application.firebase", version = "unspecified" }
+#template-android-application-flavors = { id = "template.android.application.flavors", version = "unspecified" }
+#template-android-application-jacoco = { id = "template.android.application.jacoco", version = "unspecified" }
+template-android-feature = { id = "template.android.feature", version = "unspecified" }
+template-android-hilt = { id = "template.android.hilt", version = "unspecified" }
+template-android-library = { id = "template.android.library", version = "unspecified" }
+template-android-library-compose = { id = "template.android.library.compose", version = "unspecified" }
+#template-android-library-jacoco = { id = "template.android.library.jacoco", version = "unspecified" }
+#template-android-lint = { id = "template.android.lint", version = "unspecified" }
+#template-android-room = { id = "template.android.room", version = "unspecified" }
+#template-android-test = { id = "template.android.test", version = "unspecified" }
+template-jvm-library = { id = "template.jvm.library", version = "unspecified" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.3" }
+ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "11.6.1" }

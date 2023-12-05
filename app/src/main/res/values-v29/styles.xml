@@ -1,0 +1,11 @@
+<resources>
+    <!-- Если происходит ошибка Cannot resolve symbol "Theme", закрыть проект и импортировать
+    снова -->
+
+    <!-- На Api 29 и выше происходит автоматическая защита контента.-->
+    <!-- Указывая что statusBarColor прозрачный, мы можем отображать контент за статус баром-->
+    <style name="ThemeMainScreen" parent="ThemeNoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>

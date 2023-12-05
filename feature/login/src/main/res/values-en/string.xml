@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="login" tools:ignore="DuplicateStrings">LOGIN</string>
+
+    <string name="error_empty_data">Login and password can not be empty</string>
+    <string name="error_login_data">"Incorrect login or password!"</string>
+    <string name="login_hint" tools:ignore="DuplicateStrings">Login</string>
+    <string name="password_hint">Password</string>
+</resources>

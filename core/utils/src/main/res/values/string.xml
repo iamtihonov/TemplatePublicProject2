@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select">Выбрать</string>
+
+    <string name="error_internet">Проблемы с интернетом подключением</string>
+    <string name="error_server">Ошибка сервера, попробуйте повторить позже</string>
+    <string name="error_unknown">Неизвестная ошибка, попробуйте повторить позже</string>
+</resources>

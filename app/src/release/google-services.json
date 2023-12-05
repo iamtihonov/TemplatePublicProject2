@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "635755110422",
+    "firebase_url": "https://templateproject2release.firebaseio.com",
+    "project_id": "templateproject2release",
+    "storage_bucket": "templateproject2release.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635755110422:android:0ff9019295414950",
+        "android_client_info": {
+          "package_name": "ua.artem.template"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635755110422-hncud9c1n07ei9ni3pv3fjv9isbbqbsv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD58Un530FktcvRe0JKPg3D_grhFqLrz-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635755110422-hncud9c1n07ei9ni3pv3fjv9isbbqbsv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
