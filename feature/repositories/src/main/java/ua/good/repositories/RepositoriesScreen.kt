@@ -19,7 +19,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -34,11 +33,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import kotlinx.datetime.Clock
-import ua.good.model.Language
 import ua.good.model.RepositoriesFilter
 import ua.good.model.Repository
 import ua.good.utils.ResourcesUtil
@@ -47,67 +44,73 @@ import ua.good.utils.base.compose.widget.Progress
 import ua.good.utils.base.compose.widget.SingleSelectDialog
 import ua.good.utils.base.compose.widget.TopBar
 
-/**
- * Фрагмент со списком репозиториев
- */
 @Composable
-fun RepositoriesScreen(navigation: NavHostController) {
+fun RepositoriesRoute(backClickListener: () -> Unit = {}) {
     val model: RepositoriesModel = hiltViewModel()
     var currentFilter by rememberSaveable { mutableIntStateOf(0) }
     var showFilterDialog by rememberSaveable { mutableStateOf(false) }
+    val state by model.state.collectAsStateWithLifecycle()
+
+    BackHandler(true, backClickListener)
+    RepositoriesScreen(state, showFilterDialog, currentFilter, {
+        showFilterDialog = true
+    }, {
+        showFilterDialog = false
+        currentFilter = it
+        model.handleFilterChanged(RepositoriesFilter.entries[it])
+    }, {
+        showFilterDialog = false
+    })
+}
+
+@Composable
+fun RepositoriesScreen(
+    state: RepositoriesStates<List<Repository>>,
+    showFilterDialog: Boolean = false,
+    currentFilter: Int = 0,
+    filterIconClicked: () -> Unit = {},
+    filterChanged: (Int) -> Unit = {},
+    filterDialogHided: () -> Unit = {}
+) {
     val filters = ResourcesUtil(LocalContext.current).getStringArray(R.array.repository_filter)
-
-    /**
-     * Можно еще почитать:
-     * https://oguzhanaslann.medium.com/handling-back-presses-in-jetpack-compose-and-onbackinvokedcallback-982e805173f0
-     */
-    BackHandler(true) {
-        // Используя navigate увеличивается backstack
-        navigation.popBackStack("login", false)
-    }
-
     Scaffold(
         topBar = {
             TopBar(
                 R.string.repositories_title,
-                { showFilterDialog = true },
+                filterIconClicked,
                 R.drawable.baseline_filter_list_24
             )
         },
         content = { padding ->
-            Content(padding)
+            Content(padding, state)
             if (showFilterDialog) {
-                val repositoriesTitleId = R.string.repositories_title
-                val filterTitleId = R.string.repositories_filter_title
-                SingleSelectDialog(repositoriesTitleId, filters, currentFilter, filterTitleId, {
-                    showFilterDialog = false
-                    currentFilter = it
-                    model.handleFilterChanged(RepositoriesFilter.values()[it])
-                }, {
-                    showFilterDialog = false
-                })
+                SingleSelectDialog(
+                    R.string.repositories_title,
+                    filters,
+                    currentFilter,
+                    R.string.repositories_filter_title,
+                    filterChanged,
+                    filterDialogHided
+                )
             }
         }
     )
 }
 
 @Composable
-fun Content(padding: PaddingValues) {
-    val model: RepositoriesModel = hiltViewModel()
-    val state = model.state.observeAsState()
-
-    if (state.value is RepositoriesStates.Loaded) {
-        val list = (state.value as RepositoriesStates.Loaded<List<Repository>>).list
+fun Content(padding: PaddingValues, state: RepositoriesStates<List<Repository>>) {
+    if (state is RepositoriesStates.Loaded) {
+        val list = state.list
         if (list.isEmpty()) {
             ErrorText(R.string.error_count_repositories)
         } else {
             Repositories(list, padding)
         }
-    } else if (state.value is RepositoriesStates.Progress) {
+    } else if (state is RepositoriesStates.Progress) {
         Progress()
-    } else if (state.value == RepositoriesStates.ServerError) {
+    } else if (state == RepositoriesStates.ServerError) {
         ErrorText(ua.good.utils.R.string.error_internet)
-    } else if (state.value == RepositoriesStates.InternetError) {
+    } else if (state == RepositoriesStates.InternetError) {
         ErrorText(ua.good.utils.R.string.error_server)
     }
 }
@@ -174,17 +177,15 @@ fun AppDivider() {
 
 @Preview
 @Composable
-fun PreviewRepositories() {
-    val test = List(30) { i ->
-        Repository(i, "Репозиторий $i", Language.KOTLIN, Clock.System.now())
-    }
-    Repositories(test, PaddingValues(10.dp))
+fun RepositoriesScreenPreview() = RepositoriesScreen(RepositoriesStates.Loaded(getTestRepositories()))
+
+@Preview
+@Composable
+fun DialogPreview() =
+    RepositoriesScreen(RepositoriesStates.Loaded(getTestRepositories()), true)
+
+@Preview
+@Composable
+fun ErrorPreview() {
+    RepositoriesScreen(RepositoriesStates.InternetError, false, 0)
 }
-
-@Preview
-@Composable
-fun PreviewProgress() = Progress()
-
-@Preview
-@Composable
-fun PreviewError() = ErrorText(textId = ua.good.utils.R.string.error_internet)

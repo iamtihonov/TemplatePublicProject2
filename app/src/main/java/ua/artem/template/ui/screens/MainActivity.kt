@@ -8,8 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ua.artem.template.base.BaseActivity
-import ua.good.login.LoginScreen
-import ua.good.repositories.RepositoriesScreen
+import ua.good.login.LoginRoute
+import ua.good.repositories.RepositoriesRoute
 
 /**
  * Главный экран приложения
@@ -23,12 +23,23 @@ class MainActivity : BaseActivity() {
             View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
         setContent {
             val navController = rememberNavController()
+            val showRepositoriesEvent = {
+                navController.navigate(Routes.REPOSITORIES)
+                navController.clearBackStack(Routes.LOGIN)
+                Unit
+            }
+            val hideApplicationEvent = { finish() }
             NavHost(navController = navController, startDestination = Routes.LOGIN) {
                 composable(Routes.LOGIN) {
-                    LoginScreen(navController)
+                    LoginRoute(showRepositoriesEvent, hideApplicationEvent)
                 }
                 composable(Routes.REPOSITORIES) {
-                    RepositoriesScreen(navController)
+                    RepositoriesRoute {
+                        // Можно еще почитать:
+                        // https://oguzhanaslann.medium.com/handling-back-presses-in-jetpack-compose-and-onbackinvokedcallback-982e805173f0
+                        // Используя navigate увеличивается backstack
+                        navController.popBackStack(Routes.LOGIN, false)
+                    }
                 }
             }
         }

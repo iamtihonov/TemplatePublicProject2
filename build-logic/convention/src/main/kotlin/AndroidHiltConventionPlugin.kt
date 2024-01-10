@@ -19,7 +19,6 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.dependencies
 import ua.artem.template.libs
 
-@Suppress("unused")
 class AndroidHiltConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

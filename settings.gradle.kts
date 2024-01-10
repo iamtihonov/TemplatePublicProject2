@@ -18,7 +18,6 @@ rootProject.name = "TemplateProject2"
 include(":app")
 include(":core:data")
 include(":core:utils")
-include(":benchmark")
 include(":core")
 include(":core:network")
 include(":core:db")

@@ -7,7 +7,8 @@
 - the project is supported according to free time and desire
 - add a minimum number of screens (to make it easier to maintain)
 - git history is stored in a private repository
-
+- it would be nice to add a check of code coverage by tests at a certain level
+- 
 # Project Objective:
 - familiarity in new recommended implementation methods
 - in one place there was a small code that can be shown

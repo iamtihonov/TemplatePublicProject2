@@ -22,7 +22,6 @@ import org.gradle.kotlin.dsl.dependencies
 import ua.artem.template.configureKotlinAndroid
 import ua.artem.template.libs
 
-@Suppress("unused")
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {

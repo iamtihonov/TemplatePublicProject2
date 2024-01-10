@@ -42,9 +42,9 @@ internal fun Project.configureAndroidCompose(commonExtension: CommonExtension<*,
             add("implementation", "androidx.compose.material3:material3")
             add("implementation", "androidx.compose.ui:ui-tooling-preview")
             add("implementation", "androidx.compose.ui:ui-graphics")
-            add("implementation", "androidx.compose.ui:ui")
             add("implementation", "androidx.lifecycle:lifecycle-runtime-compose")
             add("implementation", "androidx.compose.runtime:runtime-livedata")
+            add("debugImplementation", libs.findLibrary("androidx.ui.tooling").get())
         }
 
         @Suppress("UnstableApiUsage")

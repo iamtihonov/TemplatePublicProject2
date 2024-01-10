@@ -1,17 +1,21 @@
 [versions]
 
-# Android Studio Giraffe 2022.3.1 = Android Gradle plugin (AGP) 3.2-8.1 (3.2 is old version number)
+# Android Studio Hedgehog 2023.1.1 = Minimum AGP version 8.1.1 (title in docs:
+# Minimum versions of tools for Android API level)
+
 # AGP 8.1 = minimum gradle 8.0 (last 8.4)
 # The gradle version can be found in the gradle-wrapper.properties file
 # more info https://developer.android.com/build/releases/gradle-plugin
-# and maybe need check https://detekt.dev/docs/introduction/compatibility/
+
+# And maybe need check https://detekt.dev/docs/introduction/compatibility/ (not updated)
+# Check last detekt tested version AGP, kotlin versions https://github.com/detekt/detekt/releases
 
 # main
 gradleVersion = "8.4" # not using, only info (gradle-wrapper.properties)
-androidGradlePlugin = "8.1.1" # todo use 8.1.4
-detektVersion = "1.23.3" # Указать ссылку на эту строку не получилось
-kotlin = "1.9.10"
-ksp = "1.9.10-1.0.13" # The version must be compatible with kotlin
+androidGradlePlugin = "8.1.3" # todo use 8.2
+detektVersion = "1.23.4" # Указать ссылку на эту строку не получилось
+kotlin = "1.9.20"
+ksp = "1.9.20-1.0.14" # The version must be compatible with kotlin
 hilt = "2.48.1"
 kotlinxCoroutines = "1.7.3"
 jdk_version = "17" # not using, only info
@@ -25,11 +29,11 @@ navVersion = "2.7.5"
 orchestrator = "1.4.2"
 uiautomator = "2.2.0"
 runner = "1.5.2"
-benchmark-junit4 = "1.1.1"
+benchmarkJunit4 = "1.1.1"
 robolectric = "4.11.1"
 
 # data layer
-room = "2.6.0"
+room = "2.6.1"
 datastore = "1.0.0"
 retrofit = "2.9.0"
 chucker = "3.4.0"
@@ -43,12 +47,12 @@ lifecycle-extensions = "2.2.0"
 ktx = "1.9.0"
 appcompat = "1.6.1"
 constraintlayout = "2.1.4"
-material = "1.10.0"
+material = "1.11.0"
 androidxHiltNavigationCompose = "1.1.0"
 coil = "2.4.0"
-androidxComposeCompiler = "1.5.3"
-androidxComposeBom = "2023.10.00"
-androidxComposeRuntimeTracing = "1.0.0-alpha03"
+androidxComposeCompiler = "1.5.4"
+androidxComposeBom = "2023.10.01"
+androidxComposeRuntimeTracing = "1.0.0-beta01"
 
 # other
 rxandroid = "2.1.1"
@@ -56,6 +60,7 @@ rxjava = "2.2.19"
 leakcanary = "2.9.1"
 gmsPlugin = "4.3.15"
 org-jetbrains-kotlin-jvm = "1.9.10"
+uiTooling = "1.5.4"
 
 [libraries]
 androidx-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "ktx" }
@@ -76,7 +81,7 @@ junit-android = { group = "androidx.test.ext", name = "junit", version.ref = "ju
 mockito = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
 uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
-benchmark-junit4 = { group = "androidx.benchmark", name = "benchmark-junit4", version.ref = "benchmark.junit4" }
+benchmark-junit4 = { group = "androidx.benchmark", name = "benchmark-junit4", version.ref = "benchmarkJunit4" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric"}
 
 orchestrator = { group = "androidx.test", name = "orchestrator", version.ref = "orchestrator" }
@@ -94,14 +99,8 @@ logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-intercep
 
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
-retrofit-rxjava2 = { group = "com.squareup.retrofit2", name = "adapter-rxjava2", version.ref = "retrofit" }
-
-rxandroid = { group = "io.reactivex.rxjava2", name = "rxandroid", version.ref = "rxandroid" }
-rxjava = { group = "io.reactivex.rxjava2", name = "rxjava", version.ref = "rxjava" }
 datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime"}
-
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
-room-rxjava2 = { group = "androidx.room", name = "room-rxjava2", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
 androidx-lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version.ref = "lifecycle-extensions" }
@@ -119,6 +118,7 @@ androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navig
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
@@ -149,5 +149,5 @@ template-android-library-compose = { id = "template.android.library.compose", ve
 #template-android-room = { id = "template.android.room", version = "unspecified" }
 #template-android-test = { id = "template.android.test", version = "unspecified" }
 template-jvm-library = { id = "template.jvm.library", version = "unspecified" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.3" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version = "1.23.4" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version = "11.6.1" }

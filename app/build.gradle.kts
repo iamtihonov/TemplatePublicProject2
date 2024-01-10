@@ -30,7 +30,7 @@ android {
             isShrinkResources = false // Сжатие ресурсов отключено
             applicationIdSuffix = ".debug"
 
-            // Что бы библиотеки не обноляли каждый раз Build Id
+            // Что бы библиотеки не обновляли каждый раз Build Id
             (this as ExtensionAware).extra["alwaysUpdateBuildId"] = false
         }
 

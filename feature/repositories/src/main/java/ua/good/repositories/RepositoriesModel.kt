@@ -1,11 +1,8 @@
 package ua.good.repositories
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.MutableStateFlow
 import ua.good.domain.IGetRepositoriesUseCase
 import ua.good.model.RepositoriesFilter
 import ua.good.model.Repository
@@ -26,7 +23,7 @@ class RepositoriesModel @Inject constructor(
     private var getRepositoriesUseCase: IGetRepositoriesUseCase
 ) : BaseInternetModel() {
 
-    var state = MutableLiveData<RepositoriesStates<List<Repository>>>()
+    var state = MutableStateFlow<RepositoriesStates<List<Repository>>>(RepositoriesStates.Default)
     private var currentFilter = RepositoriesFilter.DEFAULT
     private var loadRepositoriesJob: Job? = null
 
@@ -35,9 +32,9 @@ class RepositoriesModel @Inject constructor(
     }
 
     private fun loadRepositoriesIfNeed(isInit: Boolean) {
-        state.postValue(RepositoriesStates.Progress)
+        state.value = RepositoriesStates.Progress
         loadRepositoriesJob?.cancel()
-        loadRepositoriesJob = viewModelScope.launch(Dispatchers.IO) {
+        loadRepositoriesJob = launchOnIO {
             handleResult(getRepositoriesUseCase.invoke(currentFilter, isInit))
         }
     }
@@ -45,19 +42,19 @@ class RepositoriesModel @Inject constructor(
     @Suppress("CascadeIf")
     private fun handleResult(result: ResultWrapper<List<Repository>>) {
         if (result is ResultWrapper.Success) {
-            state.postValue(RepositoriesStates.Loaded(result.value))
+            state.value = RepositoriesStates.Loaded(result.value)
         } else if (result is ResultWrapper.NetworkError) {
-            state.postValue(RepositoriesStates.InternetError)
+            state.value = RepositoriesStates.InternetError
         } else if (result is ResultWrapper.ServerError) {
-            state.postValue(RepositoriesStates.ServerError)
+            state.value = RepositoriesStates.ServerError
         } else if (result is ResultWrapper.CanceledError) {
-            state.postValue(RepositoriesStates.Default)
+            state.value = RepositoriesStates.Default
         }
     }
 
     fun handleFilterChanged(value: RepositoriesFilter) {
         currentFilter = value
-        state.postValue(RepositoriesStates.NeedLoaded)
+        state.value = RepositoriesStates.NeedLoaded
         loadRepositoriesIfNeed(false)
     }
 

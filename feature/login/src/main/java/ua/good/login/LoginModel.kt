@@ -1,11 +1,8 @@
 package ua.good.login
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.launch
 import ua.good.domain.ILoginUseCase
 import ua.good.utils.ResultWrapper
 import ua.good.utils.base.BaseModel
@@ -21,16 +18,16 @@ class LoginModel @Inject constructor(
     private val loginUseCase: ILoginUseCase
 ) : BaseModel() {
 
-    val state = MutableStateFlow(LoginProgressState.DEFAULT)
-    val events = MutableStateFlow(LoginEvents.NOTHING)
+    val progressState = MutableStateFlow(LoginProgressState.DEFAULT)
+    val dialogStates = MutableStateFlow(LoginDialogStates.NOTHING)
     val login = MutableStateFlow("")
     val password = MutableStateFlow("")
 
     private var viewModelJob: Job? = null
 
     init {
-        state.value = LoginProgressState.PROGRESS
-        CoroutineScope(Dispatchers.IO).launch {
+        progressState.value = LoginProgressState.PROGRESS
+        launchOnIO {
             loginUseCase.clearAuthorizedData()
             val login = loginUseCase.geCurrentUserLogin()
             updateLoginData(LoginShowedData(login))
@@ -41,7 +38,7 @@ class LoginModel @Inject constructor(
         launchOnUI {
             login.value = value.login
             password.value = value.password
-            state.value = LoginProgressState.DEFAULT
+            progressState.value = LoginProgressState.DEFAULT
         }
     }
 
@@ -57,38 +54,29 @@ class LoginModel @Inject constructor(
         if (viewModelJob?.isActive == true) {
             return
         } else if (login.value.isNotEmpty() && password.value.isNotEmpty()) {
-            state.value = LoginProgressState.PROGRESS
-            viewModelJob = CoroutineScope(Dispatchers.IO).launch {
+            progressState.value = LoginProgressState.PROGRESS
+            viewModelJob = launchOnIO {
                 handleResult(loginUseCase.login(login.value, password.value))
             }
         } else {
-            events.value = LoginEvents.IS_EMPTY_DATA_ERROR
+            dialogStates.value = LoginDialogStates.IS_EMPTY_DATA_ERROR
         }
     }
 
     private fun handleResult(result: ResultWrapper<Boolean>) {
-        state.value = LoginProgressState.DEFAULT
+        progressState.value = LoginProgressState.DEFAULT
         val event = when (result) {
-            is ResultWrapper.NetworkError -> LoginEvents.IS_INTERNET_ERROR
-            is ResultWrapper.ServerError -> LoginEvents.IS_UNKNOWN_ERROR
-            is ResultWrapper.AuthorizedError -> LoginEvents.IS_ERROR_LOGIN_DATA
-            is ResultWrapper.Success -> LoginEvents.SUCCESS
-            else -> LoginEvents.NOTHING
+            is ResultWrapper.NetworkError -> LoginDialogStates.IS_INTERNET_ERROR
+            is ResultWrapper.ServerError -> LoginDialogStates.IS_UNKNOWN_ERROR
+            is ResultWrapper.AuthorizedError -> LoginDialogStates.IS_ERROR_LOGIN_DATA
+            is ResultWrapper.Success -> LoginDialogStates.SUCCESS
+            else -> LoginDialogStates.NOTHING
         }
-        events.value = event
+        dialogStates.value = event
     }
 
     fun eventFinished() {
-        events.value = LoginEvents.NOTHING
-    }
-
-    override fun onBackPressed() {
-        state.value = LoginProgressState.DEFAULT
-        if (viewModelJob?.isActive == true) {
-            viewModelJob?.cancel()
-        } else {
-            events.value = LoginEvents.SCREEN_HIDED
-        }
+        dialogStates.value = LoginDialogStates.NOTHING
     }
 
     override fun onCleared() {

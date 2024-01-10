@@ -10,8 +10,8 @@
 Варианты реализации:
 1. Создать модуль notification и туда поместить NotificationsManager + интерфейс,
    интерфейс NotificationsUtil, модель данных, сервис уведомлений. При получении уведомления
-   из NotificationsManager дергать слушатель NotificationsListener. (Пробоавал,
+   из NotificationsManager дергать слушатель NotificationsListener. (Пробовал,
    AppFirebaseMessagingService поидее должен быть на уровне app, так как должен
-инжектить поля и взамодействововать ProjectApplication)
+инжектить поля и взаимодействовать ProjectApplication)
 2. В данный момент все менеджеры и синглтоны находяться в data слое, пока логичнее его держать там
 (NotificationsManager отвечает за обработку данных, все логично - оставил этот)
